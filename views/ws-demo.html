@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <title>在线聊天</title>
+</head>
+<body>
+<input type="text" id="name" >
+<input type="text" id="msg">
+<p id="info"></p>
+<button id="btn">send</button>
+<script>
+    var wsServer = new WebSocket('ws://127.0.0.1:3000');
+    wsServer.onopen = function (e) {
+        (typeof e == 'string') && wsServer.send(e);//向后台发送数据
+    };
+    wsServer.onclose = function (e) {//当链接关闭的时候触发
+
+    };
+    wsServer.onmessage = function (e) {//后台返回消息的时候触发
+        document.getElementById('info').innerHTML+=`服务端:${e.data}<br/>`
+    };
+    wsServer.onerror = function (e) {//错误情况触发
+
+    }
+
+    document.getElementById('btn').onclick=function () {
+        var msg = document.getElementById('msg').value;
+        var name =document.getElementById('name').value;
+        var str = "{name:'" + name + "',msg:'" + msg + "'}";
+        wsServer.send(str);
+    }
+</script>
+</body>
+</html>

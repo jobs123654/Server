@@ -4,6 +4,10 @@ var router = express.Router();
 var UserModel= require('../model/UserModel')
 var WorkModel= require('../model/WorkModel')
 var BchModel= require('../model/BchModel')
+
+
+
+
 const findUser=(req,res)=>{
     let key=req.query.name;
 
@@ -69,16 +73,20 @@ router.all('*', function(req, res, next) {
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
+
 /* 新增用户 */
 router.get('/add', function(req, res, next) {
     addUser(req,res)
 });
-/*查询用户*/
 /* 登录 */
+router.get('/login', function(req, res, next) {
+    login(req,res)
+
+});
+/*查询用户*/
 router.get('/find', function(req, res, next) {
     findUser(req,res)
 });
-
 
 /* 新增用户 */
 router.get('/add', function(req, res, next) {
