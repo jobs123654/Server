@@ -14,7 +14,7 @@ var io = require('socket.io')(http);
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-app.use(express.static('public'))
+
 /**
  * Create HTTP server.
  */
@@ -29,6 +29,7 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+//websocket 三方通信
 io.on("connection",function(socket){
     socket.on("chat",function(msg){
         //把接收到的msg原样广播
